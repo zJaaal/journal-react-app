@@ -7,6 +7,8 @@ import {
   Grid,
   Container,
 } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./routers/AppRouter";
 import "./JournalApp.css";
 
 function JournalApp() {
@@ -18,22 +20,12 @@ function JournalApp() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Paper>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          height={"100vh"}
-        >
-          <Grid item xs={12}>
-            <Typography variant="h3" align="center">
-              Hello World
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
+      <BrowserRouter>
+        <CssBaseline />
+        <Paper>
+          <AppRouter />
+        </Paper>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

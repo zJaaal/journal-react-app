@@ -40,12 +40,12 @@ const LoginPage = () => {
                   sx={{ marginTop: "4px", fontSize: "30px" }}
                   color="secondary"
                 />
-                <Grid item xs={3}>
-                  <Typography variant="h4" gutterBottom>
+                <Grid item>
+                  <Typography variant="h5" gutterBottom>
                     Journal App
                   </Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item>
                   <TextField
                     id="standard-basic"
                     label="Email"
@@ -55,7 +55,7 @@ const LoginPage = () => {
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item>
                   <TextField
                     id="standard-basic"
                     label="Password"
@@ -75,7 +75,7 @@ const LoginPage = () => {
                 alignItems="center"
                 rowSpacing={2}
               >
-                <Grid item xs={4}>
+                <Grid item>
                   <Button
                     variant="contained"
                     color="secondary"
@@ -88,12 +88,12 @@ const LoginPage = () => {
                   variant="middle"
                   sx={{ width: "55%", paddingTop: "16px" }}
                 />
-                <Grid item xs={4}>
+                <Grid item>
                   <Button variant="outlined" startIcon={<GoogleIcon />}>
                     Sign in with Google
                   </Button>
                 </Grid>
-                <Grid item xs={4} mt={4}>
+                <Grid item mt={4}>
                   <Link to="/auth/register">
                     <Button size="small">Register</Button>
                   </Link>

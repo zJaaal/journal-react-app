@@ -12,3 +12,13 @@ code {
 a {
   text-decoration: none;
 }
+
+.journal-entries {
+  overflow-y: scroll;
+  cursor: pointer;
+}
+
+.entry-image {
+  width: 75px;
+  height: 75px;
+}

@@ -4,7 +4,7 @@ import Sidebar from "../../components/Sidebar";
 
 const HomePage = () => {
   return (
-    <Grid container height={"100vh"}>
+    <Grid container height={"100vh"} width={"100vw"}>
       <Sidebar />
       <MainContent />
     </Grid>

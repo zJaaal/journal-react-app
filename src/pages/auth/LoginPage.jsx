@@ -13,8 +13,35 @@ import GoogleIcon from "@mui/icons-material/Google";
 import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
+import useForm from "../../hooks/useForm";
+import { useDispatch } from "react-redux";
+import { login } from "../../actions/auth";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
+  const [values, handleInputChange, reset] = useForm({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = values;
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    //Should be a better way to do this
+    const result = {
+      email: email.trim(),
+      password: password.trim(),
+    };
+
+    if (!result.email.length || !result.password.length)
+      return alert("Some fields are empty");
+
+    console.log(result);
+    dispatch(login(12345, "Jalinson"));
+  };
   return (
     <Grid
       container
@@ -24,7 +51,7 @@ const LoginPage = () => {
       alignContent="center"
       height={"100vh"}
     >
-      <Grid item xs={6}>
+      <Grid item xs={6} component="form" onSubmit={handleLogin}>
         <Paper elevation={4}>
           <Card>
             <CardContent>
@@ -47,22 +74,26 @@ const LoginPage = () => {
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-email"
                     label="Email"
                     variant="standard"
                     name="email"
+                    value={email}
                     color="secondary"
                     autoComplete="off"
+                    onChange={handleInputChange}
                   />
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-password"
                     label="Password"
                     variant="standard"
                     name="password"
+                    value={password}
                     type="password"
                     color="secondary"
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>
@@ -80,6 +111,7 @@ const LoginPage = () => {
                     variant="contained"
                     color="secondary"
                     endIcon={<LoginIcon />}
+                    type="submit"
                   >
                     Login
                   </Button>

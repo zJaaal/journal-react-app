@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./routers/AppRouter";
+import { StoreProvider } from "./store/StoreProvider";
 import "./JournalApp.css";
 
 function JournalApp() {
@@ -23,7 +24,9 @@ function JournalApp() {
       <BrowserRouter>
         <CssBaseline />
         <Paper>
-          <AppRouter />
+          <StoreProvider>
+            <AppRouter />
+          </StoreProvider>
         </Paper>
       </BrowserRouter>
     </ThemeProvider>

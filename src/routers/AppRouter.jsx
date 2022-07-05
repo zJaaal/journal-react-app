@@ -4,14 +4,16 @@ import { CircularProgress, Grid } from "@mui/material";
 import { firebase } from "../firebase/firebase-config";
 import { useDispatch } from "react-redux";
 import AuthRouter from "./AuthRouter";
+import PrivateRoutes from "./PrivateRoutes";
 import HomePage from "../pages/home/HomePage";
 import { login } from "../actions/auth";
+import PublicRoutes from "./PublicRoutes";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
 
   const [checking, setChecking] = useState(true);
-  const [LogggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -40,8 +42,24 @@ const AppRouter = () => {
   } else
     return (
       <Routes>
-        <Route path="/auth/*" element={<AuthRouter />} />
-        <Route exact path="/" element={<HomePage />} />
+        <Route
+          path="/auth/*"
+          element={
+            <PublicRoutes loggedIn={loggedIn}>
+              <AuthRouter />
+            </PublicRoutes>
+          }
+        />
+
+        <Route
+          exact
+          path="/"
+          element={
+            <PrivateRoutes loggedIn={loggedIn}>
+              <HomePage />
+            </PrivateRoutes>
+          }
+        />
       </Routes>
     );
 };

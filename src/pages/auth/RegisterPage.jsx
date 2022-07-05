@@ -14,12 +14,13 @@ import { Link } from "react-router-dom";
 import validator from "validator";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import useForm from "../../hooks/useForm";
-import { setError, removeError } from "../../actions/ui";
+import { setError, removeError, setStartLoading } from "../../actions/ui";
+import { startRegisterWithEmailPasswordName } from "../../actions/auth";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  const ui = useSelector((state) => state.ui);
+  const { errMsg, loading } = useSelector((state) => state.ui);
 
   const [values, handleInputChange, reset] = useForm({
     name: "",
@@ -32,18 +33,20 @@ const RegisterPage = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    dispatch(removeError());
+    dispatch(setStartLoading());
 
     if (!formIsValid()) return;
 
-    dispatch(removeError());
+    dispatch(startRegisterWithEmailPasswordName(email, password, name));
   };
 
   const formIsValid = () => {
     if (!name.trim().length) {
-      dispatch(setError("Name field its empty"));
+      dispatch(setError("Name is required"));
       return false;
     } else if (!validator.isEmail(email)) {
-      dispatch(setError("Email its invalid"));
+      dispatch(setError("Email is invalid"));
       return false;
     } else if (password != confirm) {
       dispatch(setError("Passwords are different"));
@@ -136,11 +139,17 @@ const RegisterPage = () => {
                     onChange={handleInputChange}
                   />
                 </Grid>
-                <Grid item container justifyContent={"center"}>
-                  <Typography variant="subtitle" color="error" align="center">
-                    {ui.errMsg}
-                  </Typography>
-                </Grid>
+                {errMsg && (
+                  <Grid item container justifyContent={"center"}>
+                    <Typography
+                      variant="subtitle2"
+                      color="error"
+                      align="center"
+                    >
+                      {errMsg}
+                    </Typography>
+                  </Grid>
+                )}
               </Grid>
             </CardContent>
             <CardActions>
@@ -157,13 +166,16 @@ const RegisterPage = () => {
                     color="secondary"
                     endIcon={<ArrowForwardIosIcon />}
                     type="submit"
+                    disabled={loading}
                   >
                     Register
                   </Button>
                 </Grid>
                 <Grid item mt={4}>
                   <Link to="/auth/login">
-                    <Button size="small">Already have an account?</Button>
+                    <Button size="small" disabled={loading}>
+                      Already have an account?
+                    </Button>
                   </Link>
                 </Grid>
               </Grid>

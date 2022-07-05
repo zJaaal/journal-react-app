@@ -14,7 +14,9 @@ import MenuBookTwoToneIcon from "@mui/icons-material/MenuBookTwoTone";
 import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
 import useForm from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import validator from "validator";
+import { setError, removeError, setStartLoading } from "../../actions/ui";
 import {
   login,
   startGoogleLogin,
@@ -23,6 +25,8 @@ import {
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+
+  const { errMsg, loading } = useSelector((state) => state.ui);
 
   const [values, handleInputChange, reset] = useForm({
     email: "",
@@ -33,21 +37,32 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    dispatch(removeError());
+    dispatch(setStartLoading());
 
-    //Should be a better way to do this
-    const result = {
-      email: email.trim(),
-      password: password.trim(),
-    };
-
-    if (!result.email || !result.password)
-      return alert("Some fields are empty");
+    if (!formIsValid()) return;
 
     dispatch(startLoginWithEmailPassword(email, password));
   };
 
   const handleGoogleLogin = () => {
+    dispatch(removeError());
     dispatch(startGoogleLogin());
+  };
+
+  const formIsValid = () => {
+    if (!email.trim().length) {
+      dispatch(setError("Email is required"));
+      return false;
+    } else if (!validator.isEmail(email)) {
+      dispatch(setError("Please enter a valid email"));
+      return false;
+    } else if (!password.trim().length) {
+      dispatch(setError("Password is required"));
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -104,6 +119,17 @@ const LoginPage = () => {
                     onChange={handleInputChange}
                   />
                 </Grid>
+                {errMsg && (
+                  <Grid item container justifyContent={"center"}>
+                    <Typography
+                      variant="subtitle2"
+                      color="error"
+                      align="center"
+                    >
+                      {errMsg}
+                    </Typography>
+                  </Grid>
+                )}
               </Grid>
             </CardContent>
             <CardActions>
@@ -120,6 +146,7 @@ const LoginPage = () => {
                     color="secondary"
                     endIcon={<LoginIcon />}
                     type="submit"
+                    disabled={loading}
                   >
                     Login
                   </Button>
@@ -133,13 +160,16 @@ const LoginPage = () => {
                     variant="outlined"
                     startIcon={<GoogleIcon />}
                     onClick={handleGoogleLogin}
+                    disabled={loading}
                   >
                     Sign in with Google
                   </Button>
                 </Grid>
                 <Grid item mt={4}>
                   <Link to="/auth/register">
-                    <Button size="small">Register</Button>
+                    <Button size="small" disabled={loading}>
+                      Register
+                    </Button>
                   </Link>
                 </Grid>
               </Grid>

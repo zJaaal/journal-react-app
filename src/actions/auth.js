@@ -1,8 +1,37 @@
 import { types } from "../types/types";
 import { firebase, googleAuthProvider } from "../firebase/firebase-config";
+import { setError, setFinishLoading } from "./ui";
+
 export const startLoginWithEmailPassword = (email, password) => {
   return (dispatch) => {
-    dispatch(login(1234, "Jalinson"));
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((err) => dispatch(setError(err.message)))
+      .finally(() => {
+        dispatch(setFinishLoading());
+      });
+  };
+};
+
+export const startRegisterWithEmailPasswordName = (email, password, name) => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(async ({ user }) => {
+        await user.updateProfile({ displayName: name });
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((error) => {
+        dispatch(setError(error.message));
+      })
+      .finally(() => {
+        dispatch(setFinishLoading());
+      });
   };
 };
 
@@ -13,6 +42,9 @@ export const startGoogleLogin = () => {
       .signInWithPopup(googleAuthProvider)
       .then(({ user }) => {
         dispatch(login(user.uid, user.displayName));
+      })
+      .finally(() => {
+        dispatch(setFinishLoading());
       });
   };
 };

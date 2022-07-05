@@ -6,12 +6,20 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import { startSaveNote } from "../actions/notes";
 const NotesAppBar = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   const { active } = useSelector((state) => state.notes);
   const parseDate = dayjs(active.date).format("MMM, DD, YYYY ");
+
+  const handleSave = () => {
+    dispatch(startSaveNote(active));
+  };
+
   return (
     <Grid
       item
@@ -29,7 +37,7 @@ const NotesAppBar = () => {
         <IconButton aria-label="Add A Photo">
           <AddAPhotoIcon />
         </IconButton>
-        <IconButton aria-label="Save Entry">
+        <IconButton aria-label="Save Entry" onClick={handleSave}>
           <SaveIcon />
         </IconButton>
         <IconButton aria-label="Delete Entry">

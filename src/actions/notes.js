@@ -17,6 +17,21 @@ export const startNewNote = () => {
   };
 };
 
+export const startSaveNote = (note) => {
+  return async (dispatch, getState) => {
+    const uid = getState().auth.uid;
+
+    if (!note.imageUrl) delete note.imageUrl;
+
+    const noteToSave = { ...note };
+    delete noteToSave.id;
+
+    await db.doc(`${uid}/journal/notes/${note.id}`).update(noteToSave);
+    alert("Entry has been saved");
+    dispatch(refreshNotes(note.id, noteToSave));
+  };
+};
+
 export const startLoadingNotes = (uid) => {
   return async (dispatch) => {
     let notes = await loadNotes(uid);
@@ -32,4 +47,15 @@ export const activeNote = (id, note) => ({
 export const setNotes = (notes) => ({
   type: types.notesLoad,
   payload: notes,
+});
+
+export const refreshNotes = (id, note) => ({
+  type: types.notesUpdate,
+  payload: {
+    id,
+    note: {
+      id: id, //Added this because note wasnt saving with id
+      ...note,
+    },
+  },
 });

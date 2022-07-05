@@ -1,9 +1,16 @@
 import { Grid, Typography, useTheme } from "@mui/material";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { activeNote } from "../actions/notes";
 
-const JournalEntry = ({ imageUrl, date, body, title }) => {
+const JournalEntry = ({ imageUrl, date, body, title, id }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const parseDate = dayjs(date).format("ddd DD");
+
+  const handleEntryClick = () => {
+    dispatch(activeNote(id, { imageUrl, date, body, title, id }));
+  };
 
   return (
     <Grid
@@ -13,6 +20,7 @@ const JournalEntry = ({ imageUrl, date, body, title }) => {
       sx={{ backgroundColor: `${theme.palette.grey["900"]}` }}
       columnSpacing={2}
       className="journal-entry"
+      onClick={handleEntryClick}
     >
       {imageUrl && (
         <Grid

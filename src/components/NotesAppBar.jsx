@@ -6,8 +6,12 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 const NotesAppBar = () => {
   const theme = useTheme();
+  const { active } = useSelector((state) => state.notes);
+  const parseDate = dayjs(active.date).format("MMM, DD, YYYY ");
   return (
     <Grid
       item
@@ -18,7 +22,7 @@ const NotesAppBar = () => {
     >
       <Grid item xs>
         <Typography variant="h5" padding="8px">
-          July, 04, 2022
+          {parseDate}
         </Typography>
       </Grid>
       <Grid item container xs justifyContent={"end"}>

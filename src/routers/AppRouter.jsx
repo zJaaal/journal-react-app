@@ -8,6 +8,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import HomePage from "../pages/home/HomePage";
 import { login } from "../actions/auth";
 import PublicRoutes from "./PublicRoutes";
+import { startLoadingNotes } from "../actions/notes";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const AppRouter = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
+        dispatch(startLoadingNotes(user.uid));
         setLoggedIn(true);
       } else setLoggedIn(false);
 

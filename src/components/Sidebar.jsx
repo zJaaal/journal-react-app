@@ -4,9 +4,16 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import NightlightIcon from "@mui/icons-material/Nightlight";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useDispatch } from "react-redux";
+import { startLogout } from "../actions/auth";
 import JournalEntries from "./JournalEntries";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(startLogout());
+  };
+
   return (
     <Grid container direction={"column"} item xs={4} height="100vh">
       <Grid
@@ -22,7 +29,9 @@ const Sidebar = () => {
           <Typography variant="h5">Jalinson</Typography>
         </Grid>
         <Grid item container xs justifyContent={"end"}>
-          <Button color="error">Log out</Button>
+          <Button color="error" onClick={handleLogout}>
+            Log out
+          </Button>
         </Grid>
       </Grid>
       <Grid item container direction={"row"} justifyContent={"center"}>

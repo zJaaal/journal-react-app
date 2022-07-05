@@ -18,6 +18,10 @@ a {
   cursor: pointer;
 }
 
+.journal-entry {
+  border-radius: 15px;
+}
+
 .entry-image {
   width: 75px;
   height: 75px;
@@ -44,9 +48,33 @@ a {
 }
 
 .entry-text-area {
-  border: 1px solid #424242;
   font-size: 20px;
   flex: 1 1 auto;
   resize: none;
   padding: 5px;
+}
+
+/* Slider */
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  padding: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #424242;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #121212;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #757575
 }

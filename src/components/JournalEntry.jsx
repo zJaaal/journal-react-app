@@ -1,14 +1,9 @@
 import { Grid, Typography, useTheme } from "@mui/material";
-import React from "react";
+import dayjs from "dayjs";
 
-const JournalEntry = ({ entry }) => {
+const JournalEntry = ({ imageUrl, date, body, title }) => {
   const theme = useTheme();
-  const date = new Date(entry.date);
-  const [month, day, year] = [
-    date.getMonth(),
-    date.getDate(),
-    date.getFullYear(),
-  ];
+  const parseDate = dayjs(date).format("ddd DD");
 
   return (
     <Grid
@@ -19,26 +14,28 @@ const JournalEntry = ({ entry }) => {
       columnSpacing={2}
       className="journal-entry"
     >
-      <Grid
-        item
-        sx={{
-          backgroundSize: "cover",
-          backgroundImage: `url(${entry.imageUrl || ""})`,
-          backgroundPositionX: "-30px",
-        }}
-        className="entry-image"
-      ></Grid>
+      {imageUrl && (
+        <Grid
+          item
+          sx={{
+            backgroundSize: "cover",
+            backgroundImage: `url(${imageUrl})`,
+            backgroundPositionX: "-30px",
+          }}
+          className="entry-image"
+        ></Grid>
+      )}
       <Grid item xs={7} container direction={"column"}>
         <Typography variant="h6">
-          {entry.title.length ? entry.title : "Add some title"}
+          {title.length ? title : "Add some title"}
         </Typography>
         <Typography variant="caption">
-          {entry.body.length ? entry.title : "Add some body"}
+          {body.length ? body : "Add some body"}
         </Typography>
       </Grid>
       <Grid item container xs direction={"column"} justifyContent={"center"}>
-        <Typography variant="caption" align="center">
-          {`${day}/${month}/${year}`}
+        <Typography variant="subtitle1" align="center">
+          {parseDate}
         </Typography>
       </Grid>
     </Grid>

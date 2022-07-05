@@ -15,7 +15,11 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Link } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
-import { login } from "../../actions/auth";
+import {
+  login,
+  startGoogleLogin,
+  startLoginWithEmailPassword,
+} from "../../actions/auth";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -36,12 +40,16 @@ const LoginPage = () => {
       password: password.trim(),
     };
 
-    if (!result.email.length || !result.password.length)
+    if (!result.email || !result.password)
       return alert("Some fields are empty");
 
-    console.log(result);
-    dispatch(login(12345, "Jalinson"));
+    dispatch(startLoginWithEmailPassword(email, password));
   };
+
+  const handleGoogleLogin = () => {
+    dispatch(startGoogleLogin());
+  };
+
   return (
     <Grid
       container
@@ -121,7 +129,11 @@ const LoginPage = () => {
                   sx={{ width: "55%", paddingTop: "16px" }}
                 />
                 <Grid item>
-                  <Button variant="outlined" startIcon={<GoogleIcon />}>
+                  <Button
+                    variant="outlined"
+                    startIcon={<GoogleIcon />}
+                    onClick={handleGoogleLogin}
+                  >
                     Sign in with Google
                   </Button>
                 </Grid>

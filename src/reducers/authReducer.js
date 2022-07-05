@@ -3,7 +3,6 @@
 //   uid: "amdaklñsakl",
 //   name: "Jalinson"
 
-import { accordionActionsClasses } from "@mui/material";
 import { types } from "../types/types";
 
 // }

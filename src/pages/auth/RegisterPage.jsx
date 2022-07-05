@@ -11,8 +11,51 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Link } from "react-router-dom";
+import validator from "validator";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import useForm from "../../hooks/useForm";
+import { setError, removeError } from "../../actions/ui";
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+
+  const ui = useSelector((state) => state.ui);
+
+  const [values, handleInputChange, reset] = useForm({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  });
+
+  const { name, email, password, confirm } = values;
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    if (!formIsValid()) return;
+
+    dispatch(removeError());
+  };
+
+  const formIsValid = () => {
+    if (!name.trim().length) {
+      dispatch(setError("Name field its empty"));
+      return false;
+    } else if (!validator.isEmail(email)) {
+      dispatch(setError("Email its invalid"));
+      return false;
+    } else if (password != confirm) {
+      dispatch(setError("Passwords are different"));
+      return false;
+    } else if (password.length < 6) {
+      dispatch(setError("Password should have at least 6 characters"));
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <Grid
       container
@@ -22,7 +65,7 @@ const RegisterPage = () => {
       alignContent="center"
       height={"100vh"}
     >
-      <Grid item xs={6}>
+      <Grid item xs={6} component="form" onSubmit={handleRegister}>
         <Paper elevation={4}>
           <Card>
             <CardContent>
@@ -47,43 +90,56 @@ const RegisterPage = () => {
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-name"
                     label="Name"
                     variant="standard"
                     name="name"
                     color="secondary"
                     autoComplete="off"
+                    value={name}
+                    onChange={handleInputChange}
                   />
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-email"
                     label="Email"
                     variant="standard"
                     name="email"
                     color="secondary"
                     autoComplete="off"
+                    value={email}
+                    onChange={handleInputChange}
                   />
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-password"
                     label="Password"
                     variant="standard"
                     name="password"
                     type="password"
                     color="secondary"
+                    value={password}
+                    onChange={handleInputChange}
                   />
                 </Grid>
                 <Grid item>
                   <TextField
-                    id="standard-basic"
+                    id="standard-confirm"
                     label="Confirm Password"
                     variant="standard"
                     name="confirm"
                     type="password"
                     color="secondary"
+                    value={confirm}
+                    onChange={handleInputChange}
                   />
+                </Grid>
+                <Grid item container justifyContent={"center"}>
+                  <Typography variant="subtitle" color="error" align="center">
+                    {ui.errMsg}
+                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>

@@ -11,6 +11,7 @@ const JournalEntry = ({ entry }) => {
       marginBottom={"10px"}
       sx={{ backgroundColor: `${theme.palette.grey["900"]}` }}
       columnSpacing={2}
+      className="journal-entry"
     >
       <Grid
         item

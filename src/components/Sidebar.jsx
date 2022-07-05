@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import NightlightIcon from "@mui/icons-material/Nightlight";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startLogout } from "../actions/auth";
 import JournalEntries from "./JournalEntries";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const { name } = useSelector((state) => state.auth);
+
   const handleLogout = () => {
     dispatch(startLogout());
   };
@@ -26,7 +28,7 @@ const Sidebar = () => {
       >
         <Grid container item alignItems={"center"} xs>
           <NightlightIcon sx={{ marginRight: "3px" }} color="secondary" />
-          <Typography variant="h5">Jalinson</Typography>
+          <Typography variant="h5">{name}</Typography>
         </Grid>
         <Grid item container xs justifyContent={"end"}>
           <Button color="error" onClick={handleLogout}>
@@ -35,7 +37,11 @@ const Sidebar = () => {
         </Grid>
       </Grid>
       <Grid item container direction={"row"} justifyContent={"center"}>
-        <Button color="secondary" startIcon={<AddBoxIcon />}>
+        <Button
+          color="secondary"
+          startIcon={<AddBoxIcon />}
+          onClick={handleAddNew}
+        >
           Add Entry
         </Button>
       </Grid>

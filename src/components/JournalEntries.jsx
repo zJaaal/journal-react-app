@@ -6,7 +6,14 @@ const JournalEntries = () => {
   const entries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <Grid container item xs className="journal-entries" marginTop={"5px"}>
+    <Grid
+      container
+      item
+      xs
+      className="journal-entries"
+      marginTop={"5px"}
+      padding={1}
+    >
       {entries.map((entry) => (
         <JournalEntry key={entry} entry={entry} />
       ))}

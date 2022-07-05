@@ -6,7 +6,13 @@ import { useTheme } from "@mui/material";
 
 const NothingSelected = () => {
   return (
-    <Grid container item justifyContent={"center"} alignItems={"center"}>
+    <Grid
+      container
+      item
+      justifyContent={"center"}
+      alignItems={"center"}
+      alignContent={"center"}
+    >
       <Grid
         item
         container

@@ -1,10 +1,11 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import JournalEntry from "./JournalEntry";
+import { useSelector } from "react-redux";
 
 const JournalEntries = () => {
-  const entries = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+  const { notes } = useSelector((state) => state.notes);
+  const keys = Object.keys(notes);
   return (
     <Grid
       container
@@ -14,8 +15,8 @@ const JournalEntries = () => {
       marginTop={"5px"}
       padding={1}
     >
-      {entries.map((entry) => (
-        <JournalEntry key={entry} entry={entry} />
+      {keys.map((key) => (
+        <JournalEntry key={notes[key].id} entry={notes[key]} />
       ))}
     </Grid>
   );

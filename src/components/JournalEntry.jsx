@@ -3,6 +3,12 @@ import React from "react";
 
 const JournalEntry = ({ entry }) => {
   const theme = useTheme();
+  const date = new Date(entry.date);
+  const [month, day, year] = [
+    date.getMonth(),
+    date.getDate(),
+    date.getFullYear(),
+  ];
 
   return (
     <Grid
@@ -17,20 +23,23 @@ const JournalEntry = ({ entry }) => {
         item
         sx={{
           backgroundSize: "cover",
-          backgroundImage: `url(../../assets/guy.png)`,
+          backgroundImage: `url(${entry.imageUrl || ""})`,
           backgroundPositionX: "-30px",
         }}
         className="entry-image"
       ></Grid>
       <Grid item xs={7} container direction={"column"}>
-        <Typography variant="h6">Here goes my title</Typography>
+        <Typography variant="h6">
+          {entry.title.length ? entry.title : "Add some title"}
+        </Typography>
         <Typography variant="caption">
-          Here goes the content and its supose to be really long
+          {entry.body.length ? entry.title : "Add some body"}
         </Typography>
       </Grid>
       <Grid item container xs direction={"column"} justifyContent={"center"}>
-        <Typography variant="caption">Monday</Typography>
-        <Typography variant="caption">28</Typography>
+        <Typography variant="caption" align="center">
+          {`${day}/${month}/${year}`}
+        </Typography>
       </Grid>
     </Grid>
   );

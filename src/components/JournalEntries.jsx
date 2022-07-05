@@ -15,7 +15,7 @@ const JournalEntries = () => {
       padding={1}
     >
       {notes.map((note) => (
-        <JournalEntry key={note.id} entry={note} />
+        <JournalEntry key={note.id} {...note} />
       ))}
     </Grid>
   );

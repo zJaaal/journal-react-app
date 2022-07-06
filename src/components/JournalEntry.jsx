@@ -28,7 +28,7 @@ const JournalEntry = ({ imageUrl, date, body, title, id }) => {
           sx={{
             backgroundSize: "cover",
             backgroundImage: `url(${imageUrl})`,
-            backgroundPositionX: "-30px",
+            backgroundRepeat: "no-repeat",
           }}
           className="entry-image"
         ></Grid>

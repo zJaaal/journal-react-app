@@ -30,6 +30,11 @@ const notesReducer = (state = initialState, action) => {
           note.id === action.payload.id ? action.payload.note : note
         ),
       };
+    case types.notesFileURL:
+      return {
+        ...state,
+        notes: state.notes.map((note) => note),
+      };
     default:
       return state;
   }

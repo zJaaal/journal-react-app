@@ -1,3 +1,5 @@
+import { FireExtinguisher } from "@mui/icons-material";
+import { uploadImage } from "../axios/axios";
 import { db } from "../firebase/firebase-config";
 import loadNotes from "../helpers/loadNotes";
 import { types } from "../types/types";
@@ -38,6 +40,21 @@ export const startLoadingNotes = (uid) => {
     dispatch(setNotes(notes));
   };
 };
+
+export const startUploadImage = (formData) => async (dispatch, getState) => {
+  const { active: activeNote } = getState().notes;
+
+  const fileUrl = await uploadImage(formData);
+
+  activeNote.imageUrl = fileUrl;
+
+  dispatch(startSaveNote(activeNote));
+};
+
+export const updateImageUrl = (id, imageUrl) => ({
+  type: types.notesFileURL,
+  payload: { id, imageUrl },
+});
 
 export const activeNote = (id, note) => ({
   type: types.notesActive,

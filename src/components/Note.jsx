@@ -44,11 +44,7 @@ const Note = () => {
         />
         {note.imageUrl && (
           <Grid item justifyContent={"start"}>
-            <img
-              height={"150px"}
-              src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
-              alt="some image"
-            />
+            <img height={"150px"} src={note.imageUrl} />
           </Grid>
         )}
       </Grid>

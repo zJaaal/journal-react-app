@@ -19,13 +19,9 @@ a {
 }
 
 .journal-entry {
-  border-radius: 15px;
+  border-radius: 20px;
 }
 
-.entry-image {
-  width: 75px;
-  height: 75px;
-}
 
 .title-input,
 .entry-text-area {

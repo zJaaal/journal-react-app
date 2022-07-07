@@ -8,7 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { startSaveNote, startUploadImage } from "../actions/notes";
+import {
+  startSaveNote,
+  startUploadImage,
+  startDeleting,
+} from "../actions/notes";
 const NotesAppBar = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -24,6 +28,10 @@ const NotesAppBar = () => {
 
   const handleUploadImage = () => {
     fileInput.current.click();
+  };
+
+  const handleDeleting = () => {
+    dispatch(startDeleting(active.id));
   };
 
   const handleFileChanged = ({ target }) => {
@@ -66,7 +74,7 @@ const NotesAppBar = () => {
         <IconButton aria-label="Save Entry" onClick={handleSave}>
           <SaveIcon />
         </IconButton>
-        <IconButton aria-label="Delete Entry">
+        <IconButton aria-label="Delete Entry" onClick={handleDeleting}>
           <DeleteIcon />
         </IconButton>
       </Grid>

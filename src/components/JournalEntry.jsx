@@ -17,7 +17,10 @@ const JournalEntry = ({ imageUrl, date, body, title, id }) => {
       container
       item
       marginBottom={"10px"}
-      sx={{ backgroundColor: `${theme.palette.grey["900"]}` }}
+      sx={{
+        backgroundColor: `${theme.palette.grey["900"]}`,
+        maxHeight: "75px",
+      }}
       columnSpacing={2}
       className="journal-entry"
       onClick={handleEntryClick}
@@ -25,12 +28,12 @@ const JournalEntry = ({ imageUrl, date, body, title, id }) => {
       {imageUrl && (
         <Grid
           item
+          xs
           sx={{
             backgroundSize: "cover",
             backgroundImage: `url(${imageUrl})`,
             backgroundRepeat: "no-repeat",
           }}
-          className="entry-image"
         ></Grid>
       )}
       <Grid item xs={7} container direction={"column"}>
